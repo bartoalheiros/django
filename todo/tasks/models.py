@@ -13,4 +13,5 @@ class Task(models.Model):
         max_length=1,
         choices=STATUS,
     )
-    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
