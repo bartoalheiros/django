@@ -35,9 +35,9 @@ def editTask(request, id):
     form = TaskForm(instance=task)
     
     if(request.method == 'POST'):
-        pass
+        return False
     else:
-        pass
+        return render(request, 'tasks/edittask.html', {'form': form, 'task': task})
 
 def helloWorld(request):
     return HttpResponse('Hello World!')
