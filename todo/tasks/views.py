@@ -6,7 +6,7 @@ from django.contrib import messages
 
 from .models import Task
 
-#listar as tasks
+#listar todas as tasks, fazer a paginação funcionar
 def taskList(request):
     tasks_list = Task.objects.all().order_by('-created_at')
     
@@ -18,12 +18,12 @@ def taskList(request):
     
     return render(request, 'tasks/list.html', {'tasks': tasks})
 
-#visualizar as tasks
+#visualizar uma task
 def taskView(request, id):
     task = get_object_or_404(Task, pk=id)
     return render(request, 'tasks/task.html', {'task': task})
 
-#criar nova task
+#criar task
 def newTask(request):
     if request.method == 'POST':
         form = TaskForm(request.POST)
@@ -54,6 +54,7 @@ def editTask(request, id):
     else:
         return render(request, 'tasks/edittask.html', {'form': form, 'task': task})
 
+#deletar task
 def deleteTask(request, id):
     task = get_object_or_404(Task, pk=id)
     task.delete()
