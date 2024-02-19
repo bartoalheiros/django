@@ -6,15 +6,25 @@ from django.contrib import messages
 
 from .models import Task
 
-#listar todas as tasks, fazer a paginação funcionar
+#listar todas as tasks
 def taskList(request):
-    tasks_list = Task.objects.all().order_by('-created_at')
     
-    paginator = Paginator(tasks_list, 3)
+    search = request.GET.get('search')
     
-    page = request.GET.get('page')
+    if search:
     
-    tasks = paginator.get_page(page)
+        tasks = Task.objects.filter(title__icontains=search)
+    
+    else:    
+    
+        tasks_list = Task.objects.all().order_by('-created_at')
+        
+        #fazer a paginação funcionar
+        paginator = Paginator(tasks_list, 3)
+        
+        page = request.GET.get('page')
+        
+        tasks = paginator.get_page(page)
     
     return render(request, 'tasks/list.html', {'tasks': tasks})
 
